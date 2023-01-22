@@ -1,0 +1,22 @@
+@media screen and (max-width:767px){
+    #slider .carousel-item{
+        height: 65vh !important;
+    }
+    #slider .carousel-item img{
+        height: 65vh !important;
+    }
+}
+@media screen and (min-width:768px) and (max-width:1023px){
+    #slider .carousel-item{
+        height: 65vh !important;
+    }
+    #slider .carousel-item img{
+        height: 65vh !important;
+    }
+}
+/* 
+@media screen and (max-width:767px){
+    .owl-item{
+        width: 390px !important;
+    }
+}  */

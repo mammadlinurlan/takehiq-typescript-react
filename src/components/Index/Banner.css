@@ -1,0 +1,59 @@
+#middleBanner{
+    margin-bottom: 100px;
+    height: 70vh;
+    background-position: center;
+    background-attachment: fixed;
+    filter: brightness(0.3);
+    animation-name: bannerAnimation;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 6s;
+    /* background-size:95%; */
+    /* background-repeat: no-repeat; */
+    background-image: url('https://cdn.shopify.com/s/files/1/0579/3795/2829/files/ORTA-BANNER-BUILDER_2808x.jpg?v=1670502519');
+}
+
+@keyframes bannerAnimation {
+    0% {
+        filter: brightness(0.5);
+    background-size:95%;
+        
+    }
+    50%{
+        filter: brightness(1.0);
+        background-size:110%;
+
+    }
+   100% {
+    filter: brightness(0.5);
+    background-size:95%;
+
+    }
+}
+
+@keyframes mobileBannerAnimation {
+    0% {
+        filter: brightness(0.5);
+    background-size:180%;
+        
+    }
+    50%{
+        filter: brightness(1.0);
+        background-size:200%;
+
+    }
+   100% {
+    filter: brightness(0.5);
+    background-size:180%;
+
+    }
+}
+
+@media screen and (max-width:767px) {
+    #middleBanner{
+        height: 45vh !important;
+        animation-name: mobileBannerAnimation;
+        background-repeat: no-repeat;
+        /* background-size: cover; */
+    }
+}

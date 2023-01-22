@@ -1,0 +1,10 @@
+#bestsellers h1{
+    text-align: center;
+    padding-bottom: 30px;
+    font-weight: 700;
+    font-size: 35px;
+    text-decoration: underline;
+}
+#bestsellers{
+    padding: 100px 0px;
+}

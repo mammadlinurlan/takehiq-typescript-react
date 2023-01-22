@@ -1,0 +1,19 @@
+.owl-item .product{
+    width: 100% !important;
+}
+
+.owl-item{
+    width: 324px !important;
+    height: 550px !important;
+}
+
+@media screen and (max-width:767px){
+    .owl-item{
+        width: 390px !important;
+    }
+} 
+@media screen and (min-width:768px) and (max-width:1023px){
+    .owl-item{
+        width: 348px !important;
+    }
+} 
