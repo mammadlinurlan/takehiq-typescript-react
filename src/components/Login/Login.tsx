@@ -6,10 +6,12 @@ import { ILoginForm, IUser } from "../../interfaces";
 import * as Yup from 'yup';
 import axios from "axios";
 import Swal from "sweetalert2";
-import { UserContext, useUserContext } from "../../hooks";
+import { UserContext, useUserContext ,BasketContext} from "../../hooks";
+axios.defaults.withCredentials = true
 
 export const Login = () => {
     const userContext = useContext(UserContext)
+    const basketContext = useContext(BasketContext)
     const SignupSchema = Yup.object().shape({
         username: Yup.string()
             .min(2, 'Too Short!')
@@ -27,12 +29,15 @@ export const Login = () => {
             console.log(res.status)
             localStorage.removeItem('userId')
             userContext.setUser({} as IUser)
+            basketContext.setBasket(null)
         })
     }
     return localStorage.getItem('userId') ?
         (
             <div className="container">
                 <h1>Welcome {userContext.user.username}</h1>
+                {/* <h1>Welcome {userContext.user.basket.length}</h1> */}
+
                 <h3 onClick={logout}>
                     Logout
                 </h3>

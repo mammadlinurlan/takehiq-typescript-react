@@ -1,15 +1,22 @@
-import React, { useEffect, useState } from "react";
-import './Navbar.css'
-import { faShoppingBag, faBars, faArrowCircleUp, faTrash, faArrowUp, faSearch, faWindowClose, faArrowDown, faUser, faShoppingCart, faUserAlt } from '@fortawesome/fontawesome-free-solid'
+import React, { useContext, useEffect, useState, useRef } from "react";
+import './Navbar.scss'
+import { faShoppingBag, faBars, faArrowCircleUp, faTrash, faArrowUp, faClosedCaptioning, faSearch, faWindowClose, faArrowDown, faUser, faShoppingCart, faUserAlt } from '@fortawesome/fontawesome-free-solid'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IoCloseOutline } from 'react-icons/io5'
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { Link, useLocation } from "react-router-dom";
+import { UserContext, BasketContext } from "../../hooks";
+import axios from "axios";
+import { IBasket, IBasketItem } from "../../interfaces";
 export const Navbar = () => {
     let { pathname } = useLocation()
     const [src, setSrc] = useState('/hiqLogo.webp')
     const [textColor, setTextColor] = useState('white')
-    const [position,setPosition] = useState('absolute')
-    
+    const [position, setPosition] = useState('absolute')
+    const [total, setTotal] = useState(0)
+    const userContext = useContext(UserContext)
+    const basketContext = useContext(BasketContext)
+    const Basket = basketContext.basket as IBasketItem[]
     useEffect(() => {
         if (pathname !== '/') {
             setSrc('/heh.webp')
@@ -24,10 +31,23 @@ export const Navbar = () => {
             document.querySelector('#header')?.classList.remove('borderClass')
 
         }
+        document.querySelector('.basketarea')?.classList.remove('activeBasket')
     }, [pathname])
+
+    useEffect(() => {
+
+      Basket ?  setTotal(
+             Basket.reduce((total, item) => {
+                return total += item.price * item.count
+            }, 0)
+            
+        )
+        :
+        console.log('log in')
+    }, [Basket])
     return (
 
-        <header style={{position: position}as React.CSSProperties} id="header">
+        <header style={{ position: position } as React.CSSProperties} id="header">
             <nav className="container">
                 <div className="row">
                     <div className="logo col-lg-3 col-md-3 col-6">
@@ -49,7 +69,11 @@ export const Navbar = () => {
                             }}
                             style={{ display: "none", color: textColor }} icon={faBars as IconProp} />
                         <FontAwesomeIcon style={{ color: textColor }} icon={faSearch as IconProp} />
-                        <FontAwesomeIcon style={{ color: textColor }} icon={faShoppingCart as IconProp} />
+                        <FontAwesomeIcon
+                            onClick={() => {
+                                document.querySelector('.basketarea')?.classList.add('activeBasket')
+                            }}
+                            style={{ color: textColor }} icon={faShoppingCart as IconProp} />
                     </div>
                 </div>
             </nav>
@@ -76,7 +100,11 @@ export const Navbar = () => {
                             }} style={{ color: "black", display: "none" }} icon={faBars as IconProp} />
 
                             <FontAwesomeIcon style={{ color: "black" }} icon={faSearch as IconProp} />
-                            <FontAwesomeIcon style={{ color: "black" }} icon={faShoppingCart as IconProp} />
+                            <FontAwesomeIcon
+                                onClick={() => {
+                                    document.querySelector('.basketarea')?.classList.add('activeBasket')
+                                }}
+                                style={{ color: "black" }} icon={faShoppingCart as IconProp} />
                         </div>
                     </div>
                 </nav>
@@ -123,6 +151,70 @@ export const Navbar = () => {
                         </ul>
                     </div>
                 </nav>
+            </div>
+            <div className="basketarea container">
+                <div style={{ justifyContent: 'space-between', padding: '14px 0px' }} className="col-lg-12 d-flex">
+                    <h3 style={{ fontWeight: '700', margin: '0' }}>Cart</h3>
+                    <IoCloseOutline
+                        fontSize='28px'
+                        onClick={() => {
+                            document.querySelector('.basketarea')?.classList.remove('activeBasket')
+                        }}
+                    />
+                    {/* <FontAwesomeIcon style={{ textAlign: 'end' }} cursor='pointer' color="red" icon={faWindowClose as IconProp} /> */}
+                </div>
+                <div className="basketWrapper">
+                    <div className="basketItems">
+                        <div className="row">
+                            {
+                                Basket?.length > 0 ? Basket.reverse().map((item) => {
+                                    return (
+                                        <div key={item._id} className="basketItem col-lg-12 col-md-12 col-12">
+                                            <div className="basketItemImage">
+                                                <img src={`http://localhost:3000/${item.image}`} alt='yoxdu' />
+                                            </div>
+                                            <div className="basketItemInfos">
+                                                <p>
+                                                    {item.name}
+                                                </p>
+                                                <p>x {item.count}</p>
+                                            </div>
+                                            <div className="basketItemPrice">
+                                                <p>{item.price}$</p>
+                                                <FontAwesomeIcon
+                                                    onClick={() => {
+
+                                                        axios.put(`http://localhost:3000/updatebasket/${localStorage.getItem('userId')}`, Basket.filter((i) => i._id != item._id))
+                                                            .then((
+                                                                basketContext.setBasket(Basket.filter((i) => i._id != item._id))
+                                                            ))
+                                                            .catch((err) => {
+                                                                window.location.href = `http://${window.location.host}/login`
+                                                            })
+
+                                                    }}
+                                                    cursor='pointer' color="red" icon={faTrash as IconProp} />
+                                            </div>
+
+                                        </div>
+                                    )
+                                })
+                                    :
+                                    <h3 style={{ fontWeight: '700', margin: '0' }}>Cart is empty...</h3>
+                            }
+
+                        </div>
+                    </div>
+                    <div className="basketBottom">
+                        <div className="basketTotalPrice">
+                            <p>TOTAL :</p>
+                            <p>{total} $</p>
+                        </div>
+                        <div className="goToCheckout">
+                            <Link to='/checkout'>PROCEED TO CHECKOUT</Link>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
     )

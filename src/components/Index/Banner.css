@@ -7,7 +7,7 @@
     animation-name: bannerAnimation;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
-    animation-duration: 6s;
+    animation-duration: 12s;
     /* background-size:95%; */
     /* background-repeat: no-repeat; */
     background-image: url('https://cdn.shopify.com/s/files/1/0579/3795/2829/files/ORTA-BANNER-BUILDER_2808x.jpg?v=1670502519');
@@ -27,6 +27,24 @@
    100% {
     filter: brightness(0.5);
     background-size:95%;
+
+    }
+}
+
+@keyframes bannerAnimation2 {
+    0% {
+        filter: brightness(0.5);
+    background-size:130%;
+        
+    }
+    50%{
+        filter: brightness(1.0);
+        background-size:140%;
+
+    }
+   100% {
+    filter: brightness(0.5);
+    background-size:130%;
 
     }
 }
@@ -52,8 +70,8 @@
 @media screen and (max-width:767px) {
     #middleBanner{
         height: 45vh !important;
-        animation-name: mobileBannerAnimation;
-        background-repeat: no-repeat;
+        animation-name: mobileBannerAnimation !important; 
+        background-repeat: no-repeat !important;
         /* background-size: cover; */
     }
 }

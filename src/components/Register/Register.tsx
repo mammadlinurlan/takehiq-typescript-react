@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { Link } from "react-router-dom";
+import { Link,Navigate,redirect } from "react-router-dom";
 import { IRegister } from "../../interfaces";
 import { data } from "jquery";
 import Swal from 'sweetalert2'
@@ -30,7 +30,8 @@ const SignupSchema = Yup.object().shape({
 
 export const Register = () => {
     const RegisterForm = {} as IRegister
-    return (
+
+    return !localStorage.getItem('userId') ? (
         <div style={{ height: '100vh' }} className="login">
             <div className="loginWrapper col-lg-4 col-md-6 col-10">
                 <h1>CREATE ACCOUNT</h1>
@@ -107,4 +108,6 @@ export const Register = () => {
             </div>
         </div>
     )
+    :
+    <Navigate to='/' />
 }

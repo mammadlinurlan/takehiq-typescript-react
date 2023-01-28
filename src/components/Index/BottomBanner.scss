@@ -1,0 +1,60 @@
+#bottomBanner{
+    height: 70vh;
+    background-position: center;
+    background-size: 125%;
+    animation-name: bannerAnimation1;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: 12s;
+    background-image: url('https://cdn.shopify.com/s/files/1/0579/3795/2829/files/7D1F2045-87ED-42A3-A006-D7381D72EC42_2808x.jpg?v=1662884171');
+}
+
+@keyframes bannerAnimation1 {
+    0% {
+        filter: brightness(0.5);
+        background-size:125%;
+        
+    }
+    50% {
+        filter: brightness(1.0);
+        background-size:135%;
+
+    }
+   100% {
+        filter: brightness(0.5);
+        background-size:125%;
+    }
+}
+
+
+@keyframes mobileBannerAnimation {
+    0% {
+        filter: brightness(0.5);
+    background-size:180%;
+        
+    }
+    50%{
+        filter: brightness(1.0);
+        background-size:200%;
+
+    }
+   100% {
+    filter: brightness(0.5);
+    background-size:180%;
+
+    }
+}
+
+@media screen and (max-width:767px) {
+    #bottomBanner{
+        height: 25vh;
+        animation-name: mobileBannerAnimation;
+    }
+}
+
+@media screen and (min-width:768px) and (max-width:1023px) {
+    #bottomBanner{
+        height: 35vh;
+        animation-name: mobileBannerAnimation;
+    }
+}
