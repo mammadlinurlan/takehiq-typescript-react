@@ -1,5 +1,5 @@
 import { useContext,createContext } from "react";
-import { IProducts, ProductIF,IUser,IBasket,IBasketItem } from "./interfaces";
+import { IOrder, ProductIF,IUser} from "./interfaces";
 export const ProductContext = createContext<any>([])
 export const useProductContext = () => useContext<ProductIF>(ProductContext)
 export const UserContext = createContext({
@@ -11,4 +11,9 @@ export const useUserContext = () => useContext(UserContext)
 
 
 export const BasketContext = createContext<any>([])
+export const OrderContext = createContext({
+    orders : [] as IOrder[],
+    setOrders : (orders : IOrder[]) => {}
+})
+
 // export const userBasketContext = () => useContext<IBasketItem>(ProductContext)

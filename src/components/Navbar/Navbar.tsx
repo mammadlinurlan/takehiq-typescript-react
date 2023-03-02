@@ -210,8 +210,10 @@ export const Navbar = () => {
                             <p>TOTAL :</p>
                             <p>{total} $</p>
                         </div>
-                        <div className="goToCheckout">
-                            <Link to='/checkout'>PROCEED TO CHECKOUT</Link>
+                        <div className={`goToCheckout ${Basket?.length > 0 ? '' : 'disabledButton'}`}>
+                            <Link to={`${Basket?.length > 0 ?  '/checkout' : '/'}`} >
+                                PROCEED TO CHECKOUT
+                                </Link>
                         </div>
                     </div>
                 </div>

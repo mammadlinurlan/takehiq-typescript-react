@@ -6,10 +6,12 @@ import { ILoginForm, IUser } from "../../interfaces";
 import * as Yup from 'yup';
 import axios from "axios";
 import Swal from "sweetalert2";
-import { UserContext, useUserContext ,BasketContext} from "../../hooks";
+import { IoLogOutOutline } from "react-icons/io5";
+import { UserContext, useUserContext, BasketContext } from "../../hooks";
 axios.defaults.withCredentials = true
 
-export const Login = () => {
+export const Login: React.FC<IUser> = ({ orders }: IUser) => {
+    const [active,setActive] = React.useState(null)
     const userContext = useContext(UserContext)
     const basketContext = useContext(BasketContext)
     const SignupSchema = Yup.object().shape({
@@ -32,15 +34,62 @@ export const Login = () => {
             basketContext.setBasket(null)
         })
     }
+    const toggleAccordion = (index) => {
+       active == index ? setActive(null) : setActive(index)
+    }
     return localStorage.getItem('userId') ?
         (
-            <div className="container">
-                <h1>Welcome {userContext.user.username}</h1>
-                {/* <h1>Welcome {userContext.user.basket.length}</h1> */}
-
-                <h3 onClick={logout}>
-                    Logout
+            <div className="container wrapperOrders">
+                <h3>Welcome {userContext.user.username}</h3>
+                <h3 className="logout" onClick={logout}>
+                    Logout <IoLogOutOutline/>
                 </h3>
+                <p className="ordersText">
+                    Your Orders :
+                </p>
+                <div className="userOrders">
+                    {orders?.map((o,index) => {
+                        return (
+                            <div key={index} className="userOrder">
+                                <div
+                                onClick={()=>{
+                                   toggleAccordion(index)
+                                }}
+                                 className="userOrderTop">
+                                    <p className="orderDate">
+                                        {o?.date?.toLocaleString()}
+                                    </p>
+                                    <p className="orderPrice">
+                                        {o.totalPrice}$
+                                    </p>
+                                    <p  className={`orderStatus status${o.status}`}>
+                                      {o.status == 3 ? 'DENIED' : ''}
+                                      {o.status == 1 ? 'PENDING' : ''}
+                                      {o.status == 2 ? 'ACCEPTED' : ''}
+
+                                    </p>
+                                </div>
+                                <div className={`userOrderBottom ${active == index ? 'activeOrderAccordion' : ''}`}>
+                                    {
+                                        o.orderItems.map((oi) => {
+                                            return (
+                                                <div className="orderItemInfo">
+                                                    <img src={`http://localhost:3000/${oi.image}`} />
+                                                    <p>COUNT : {oi.count}</p>
+                                                    <p>PRICE : {oi.price}$</p>
+                                                </div>
+
+
+                                            )
+                                        })
+                                    }
+
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+               
             </div>
         )
         :

@@ -6,6 +6,12 @@ export interface ProductIF{
     _id : string
 }
 
+export interface IProductReq{
+    image : string,
+    price : number,
+    name : string,
+    stock : number
+}
 
 export interface IProducts{
     productsArray : ProductIF[]
@@ -30,7 +36,7 @@ export interface IUser{
     email : string,
     isadmin : boolean,
     basket : IBasketItem[],
-    orders : []
+    orders : IOrder[]
 
 }
 
@@ -49,6 +55,8 @@ export interface IBasket{
 }
 
 export interface IOrder {
+    _id : string,
+    userId : string
     name : string,
     surname : string ,
     country : string,
@@ -59,6 +67,28 @@ export interface IOrder {
     status : number,
     address : string,
     totalPrice : number,
-    orderItems : IBasketItem[]
+    orderItems : IBasketItem[],
+    date : Date
 
+}
+
+export interface IMakeOrder {
+    userId : string
+    name : string,
+    surname : string ,
+    country : string,
+    state : string,
+    city : string,
+    zip : string,
+    phone : string,
+    status : number,
+    address : string,
+    totalPrice : number,
+    orderItems : IBasketItem[],
+    date : Date
+
+}
+
+export interface IOrders {
+    orders : IOrder[]
 }

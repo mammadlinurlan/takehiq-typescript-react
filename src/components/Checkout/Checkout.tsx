@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import * as Yup from 'yup'
 import './Checkout.scss'
-import { IBasket,IBasketItem,IOrder } from "../../interfaces";
+import { IBasket,IBasketItem,IMakeOrder } from "../../interfaces";
 import { Formik, Form, Field } from 'formik';
-import { BasketContext } from "../../hooks";
+import { BasketContext ,UserContext} from "../../hooks";
 import { Navigate,redirect } from "react-router-dom";
 import axios from "axios";
 import { Nav } from "react-bootstrap";
 import Swal from "sweetalert2";
 
 export const Checkout: React.FC<IBasket> = ({ basketArray }: IBasket) => {
-    // const basketContext = useContext(BasketContext)
+    const basketContext = useContext(BasketContext)
+    const user = useContext(UserContext)
+    const Basket = basketContext.basket as IBasketItem[]
     const [total,setTotal] = useState(0)
     useEffect(() => {
         setTotal(
@@ -56,7 +58,10 @@ export const Checkout: React.FC<IBasket> = ({ basketArray }: IBasket) => {
     return localStorage.getItem('userId') ? (
         
             <div  className="row">
-                <div className="col-lg-7 col-md-12 col-12 checkoutLeft">
+                {
+                    Basket?.length > 0 ?
+                    <>
+                       <div className="col-lg-7 col-md-12 col-12 checkoutLeft">
                     <div className="container">
                         <Formik
                             initialValues={{
@@ -71,7 +76,8 @@ export const Checkout: React.FC<IBasket> = ({ basketArray }: IBasket) => {
                             }}
                             validationSchema={orderSchema}
                             onSubmit={values => {
-                                const order : IOrder = {
+                                const order : IMakeOrder = {
+                                    userId : user.user.id,
                                     name : values.name,
                                     surname : values.surname,
                                     address : values.address,
@@ -82,7 +88,8 @@ export const Checkout: React.FC<IBasket> = ({ basketArray }: IBasket) => {
                                     phone : values.phone,
                                     status : 1,
                                     totalPrice : total,
-                                    orderItems : basketArray
+                                    orderItems : basketArray,
+                                    date : new Date()
                                 }
                                 
                                 axios.post(`http://localhost:3000/makeorder/${localStorage.getItem('userId')}`,order)
@@ -179,7 +186,16 @@ export const Checkout: React.FC<IBasket> = ({ basketArray }: IBasket) => {
                     </div>
 
 
-                </div>
+                </div>  
+                    </>
+                 
+                : 
+                <p
+                style={{margin:'0',textAlign:'center',fontSize:'25px',padding:'120px 0px'}}
+                >YOUR CARD IS EMPTY</p>
+
+                }
+               
             </div>
     )
     :
