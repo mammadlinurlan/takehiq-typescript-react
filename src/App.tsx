@@ -18,6 +18,7 @@ import { AdminIndex } from './components/Admin/AdminIndex';
 import { AdminOrders } from './components/Admin/AdminOrders';
 import { AdminProducts } from './components/Admin/AdminProducts';
 import { AdminCreateProducts } from './components/Admin/AdminCreateProduct';
+import { AdminUpdateProduct } from './components/Admin/AdminUpdateProduct';
 
 function App() {
   const [products, setProducts] = React.useState([])
@@ -48,6 +49,7 @@ function App() {
         }
       })
       .catch((err) => {
+        console.log(err)
         if (localStorage.getItem('userId')) {
           localStorage.removeItem('userId')
         }
@@ -93,7 +95,7 @@ function App() {
                   {isUserLoaded && user.isadmin && <Route path='/admin/orders' element={<AdminOrders orders={orders} />} />}
                   {isUserLoaded && user.isadmin && <Route path='/admin/products' element={<AdminProducts productsArray={products as ProductIF[]} />} />}
                   {isUserLoaded && user.isadmin && <Route path='/admin/createproduct' element={<AdminCreateProducts/>} />}
-
+                  {isUserLoaded && user.isadmin && <Route path='/admin/updateproduct/:productId' element={<AdminUpdateProduct/>} />}
                   <Route path='*' element={<NotFound />} />
                 </Routes>
                 <Footer />

@@ -1,6 +1,8 @@
-.createProduct{
+.adminUpdateProduct{
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     form{
     width: 30%;
     padding: 40px 0px;

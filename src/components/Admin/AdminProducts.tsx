@@ -36,7 +36,7 @@ export const AdminProducts: React.FC<IProducts> = ({ productsArray }: IProducts)
                                     <td>{i.name}</td>
                                     <td>{i.price}</td>
                                     <td>
-                                        <Link style={{textDecoration:'none',padding:'8px 15px',backgroundColor:'#f39c12',color:'white'}} to=''>Update</Link>
+                                        <Link style={{textDecoration:'none',padding:'8px 15px',backgroundColor:'#f39c12',color:'white'}} to={`/admin/updateproduct/${i._id}`} >Update</Link>
                                         <Link
                                         onClick={(e)=>{
                                             e.preventDefault()
