@@ -37,7 +37,7 @@ export const AdminOrders: React.FC<IOrders> = ({ orders }: IOrders) => {
                                     }).then((result) => {
                                         /* Read more about isConfirmed, isDenied below */
                                         if (result.isConfirmed) {
-                                            axios.put(`http://localhost:3000/orderstatus?orderId=${o._id}&status=${Number(2)}&userId=${o.userId}`)
+                                            axios.put(`https://morning-peak-77048.herokuapp.com/orderstatus?orderId=${o._id}&status=${Number(2)}&userId=${o.userId}`)
                                                 .then((res) => {
                                                     console.log(res)
                                                     orderContext.setOrders(res.data)
@@ -49,7 +49,7 @@ export const AdminOrders: React.FC<IOrders> = ({ orders }: IOrders) => {
                                                 })
 
                                         } else if (result.isDenied) {
-                                            axios.put(`http://localhost:3000/orderstatus?orderId=${o._id}&status=${Number(3)}&userId=${o.userId}`)
+                                            axios.put(`https://morning-peak-77048.herokuapp.com/orderstatus?orderId=${o._id}&status=${Number(3)}&userId=${o.userId}`)
                                                 .then((res) => {
                                                     console.log(res)
                                                     orderContext.setOrders(res.data)
@@ -73,7 +73,7 @@ export const AdminOrders: React.FC<IOrders> = ({ orders }: IOrders) => {
                                     o.orderItems.map((oi) => {
                                         return (
                                             <div className="orderItemInfo">
-                                                <img src={`http://localhost:3000/${oi.image}`} />
+                                                <img src={`https://morning-peak-77048.herokuapp.com/${oi.image}`} />
                                                 <p>COUNT : {oi.count}</p>
                                                 <p>PRICE : {oi.price}$</p>
                                             </div>

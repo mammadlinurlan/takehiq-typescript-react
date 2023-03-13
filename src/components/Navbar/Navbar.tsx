@@ -171,7 +171,7 @@ export const Navbar = () => {
                                     return (
                                         <div key={item._id} className="basketItem col-lg-12 col-md-12 col-12">
                                             <div className="basketItemImage">
-                                                <img src={`http://localhost:3000/${item.image}`} alt='yoxdu' />
+                                                <img src={`https://morning-peak-77048.herokuapp.com/${item.image}`} alt='yoxdu' />
                                             </div>
                                             <div className="basketItemInfos">
                                                 <p>
@@ -184,7 +184,7 @@ export const Navbar = () => {
                                                 <FontAwesomeIcon
                                                     onClick={() => {
 
-                                                        axios.put(`http://localhost:3000/updatebasket/${localStorage.getItem('userId')}`, Basket.filter((i) => i._id != item._id))
+                                                        axios.put(`https://morning-peak-77048.herokuapp.com/updatebasket/${localStorage.getItem('userId')}`, Basket.filter((i) => i._id != item._id))
                                                             .then((
                                                                 basketContext.setBasket(Basket.filter((i) => i._id != item._id))
                                                             ))
@@ -224,7 +224,7 @@ export const Navbar = () => {
                     onKeyUp={(e) => {
                         console.log(e.currentTarget.value)
                         if (e.currentTarget.value.length > 2) {
-                            axios.get(`http://localhost:3000/searchproducts/${e.currentTarget.value}`).then(({ data }) => {
+                            axios.get(`https://morning-peak-77048.herokuapp.com/searchproducts/${e.currentTarget.value}`).then(({ data }) => {
                                 console.log(data)
                                 setSearchProducts(data)
                             }).catch((err) => {
@@ -240,7 +240,7 @@ export const Navbar = () => {
                         return (
                             <div key={p._id} className="searchItem">
                                 <div className="searchImage">
-                                    <img src={`http://localhost:3000/${p.image}`} />
+                                    <img src={`https://morning-peak-77048.herokuapp.com/${p.image}`} />
                                 </div>
                                 <div className="searchItemInfo">
                                     <p>
@@ -261,7 +261,7 @@ export const Navbar = () => {
                                         basketItem.name = p.name
                                         basketItem.price = p.price
                                         basketItem.userId = localStorage.getItem('userId') || ''
-                                        axios.post('http://localhost:3000/addtobasket', basketItem)
+                                        axios.post('https://morning-peak-77048.herokuapp.com/addtobasket', basketItem)
                                             .then((res) => {
                                                 console.log(res)
                                                 basketContext.setBasket(res.data as IBasketItem[])

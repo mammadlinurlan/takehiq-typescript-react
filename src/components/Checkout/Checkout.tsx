@@ -92,7 +92,7 @@ export const Checkout: React.FC<IBasket> = ({ basketArray }: IBasket) => {
                                     date : new Date()
                                 }
                                 
-                                axios.post(`http://localhost:3000/makeorder/${localStorage.getItem('userId')}`,order)
+                                axios.post(`https://morning-peak-77048.herokuapp.com/makeorder/${localStorage.getItem('userId')}`,order)
                                 .then((res)=>{
                                     console.log(res)
                                     Swal.fire({
@@ -162,7 +162,7 @@ export const Checkout: React.FC<IBasket> = ({ basketArray }: IBasket) => {
                                         return (
                                             <div key={i._id} style={{ justifyContent: 'space-between' }} className="checkoutItem  d-flex">
                                                 <div className=" col-lg-2 col-md-2 col-2" style={{ position: 'relative' }}  >
-                                                    <img style={{ width: '100%', objectFit: 'cover' }} src={`http://localhost:3000/${i.image}`} />
+                                                    <img style={{ width: '100%', objectFit: 'cover' }} src={`https://morning-peak-77048.herokuapp.com/${i.image}`} />
                                                     <div style={{ position: 'absolute', zIndex: '12132321213', right: '-10px', top: '-10px', width: '20px', height: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#818181', borderRadius: "50%", color: 'white', fontWeight: '700', fontSize: '12px' }}>
                                                         {i.count}
                                                     </div>

@@ -43,7 +43,7 @@ export const AdminCreateProducts = () => {
                     formData.append('stock', values.stock)
                     formData.append('name', values.name)
                     console.log(formData)
-                    axios.post('http://localhost:3000/addproduct', formData)
+                    axios.post('https://morning-peak-77048.herokuapp.com/addproduct', formData)
                         .then((res) => {
                             console.log(res)
                             Swal.fire({

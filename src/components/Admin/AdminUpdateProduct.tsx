@@ -42,7 +42,7 @@ export const AdminUpdateProduct = () => {
         <div className="container">
             <div className="adminUpdateProduct">
                 <div>
-                    Current Image : <img width={80} height={80} src={`http://localhost:3000/${product.image}`} />
+                    Current Image : <img width={80} height={80} src={`https://morning-peak-77048.herokuapp.com/${product.image}`} />
                 </div>
                 <Formik
                     initialValues={{
@@ -61,7 +61,7 @@ export const AdminUpdateProduct = () => {
                         formData.append('stock', String(values.stock))
                         formData.append('name', values.name)
                         console.log(formData)
-                        axios.put(`http://localhost:3000/updateproduct/${productId}`, formData)
+                        axios.put(`https://morning-peak-77048.herokuapp.com/updateproduct/${productId}`, formData)
                             .then((res) => {
                                 console.log(res)
                                 Swal.fire({

@@ -49,7 +49,7 @@ export const Register = () => {
                         RegisterForm.password = values.password
                         RegisterForm.confirmpassword = values.confirmpassword
                         RegisterForm.username = values.username
-                        axios.post('http://localhost:3000/postuser',RegisterForm)
+                        axios.post('https://morning-peak-77048.herokuapp.com/postuser',RegisterForm)
                         .then((result)=>{
                             console.log(result)
                             Swal.fire({

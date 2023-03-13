@@ -11,7 +11,7 @@ import { Login } from './components/Login/Login';
 import { Products } from './components/ProductComponents/Products';
 import { Footer } from './components/Footer/Footer';
 import { Register } from './components/Register/Register';
-import { IUser, IBasket, IOrders, IOrder,ProductIF } from './interfaces';
+import { IUser, IBasket, IOrders, IOrder, ProductIF } from './interfaces';
 import { log } from 'console';
 import { Checkout } from './components/Checkout/Checkout';
 import { AdminIndex } from './components/Admin/AdminIndex';
@@ -28,17 +28,17 @@ function App() {
   const [orders, setOrders] = React.useState([] as IOrder[])
   const value = { user, setUser }
   useEffect(() => {
-    axios.get('http://localhost:3000/fortype').then(({ data }) => {
+    axios.get('https://morning-peak-77048.herokuapp.com/fortype').then(({ data }) => {
       setProducts(data.reverse())
     })
 
-    axios.get('http://localhost:3000/test')
+    axios.get('https://morning-peak-77048.herokuapp.com/test')
       .then((result) => {
         console.log(result)
         if (localStorage.getItem('userId')) {
 
           let id = localStorage.getItem('userId')
-          axios.get(`http://localhost:3000/getuser/${id}`)
+          axios.get(`https://morning-peak-77048.herokuapp.com/getuser/${id}`)
             .then(({ data }) => {
               setUser(data as IUser)
               setBasket(data.basket)
@@ -55,7 +55,7 @@ function App() {
         }
       })
 
-    axios.get('http://localhost:3000/orders').then(({ data }) => {
+    axios.get('https://morning-peak-77048.herokuapp.com/orders').then(({ data }) => {
       setOrders(data as IOrder[])
     })
 
@@ -76,13 +76,11 @@ function App() {
       <h1>404</h1>
     </div>
   }
-
-
   return (
     <>
       <Router>
         <UserContext.Provider value={value}>
-          <OrderContext.Provider value={{orders,setOrders}}>
+          <OrderContext.Provider value={{ orders, setOrders }}>
             <BasketContext.Provider value={{ basket, setBasket }}>
               <ProductContext.Provider value={{ products, setProducts }}>
                 <Navbar />
@@ -94,8 +92,8 @@ function App() {
                   {isUserLoaded && user.isadmin && <Route path='/admin' element={<AdminIndex />} />}
                   {isUserLoaded && user.isadmin && <Route path='/admin/orders' element={<AdminOrders orders={orders} />} />}
                   {isUserLoaded && user.isadmin && <Route path='/admin/products' element={<AdminProducts productsArray={products as ProductIF[]} />} />}
-                  {isUserLoaded && user.isadmin && <Route path='/admin/createproduct' element={<AdminCreateProducts/>} />}
-                  {isUserLoaded && user.isadmin && <Route path='/admin/updateproduct/:productId' element={<AdminUpdateProduct/>} />}
+                  {isUserLoaded && user.isadmin && <Route path='/admin/createproduct' element={<AdminCreateProducts />} />}
+                  {isUserLoaded && user.isadmin && <Route path='/admin/updateproduct/:productId' element={<AdminUpdateProduct />} />}
                   <Route path='*' element={<NotFound />} />
                 </Routes>
                 <Footer />

@@ -31,7 +31,7 @@ export const AdminProducts: React.FC<IProducts> = ({ productsArray }: IProducts)
                         productsArray.map((i) => {
                             return (
                                 <tr key={i._id}>
-                                    <td><img width={60} height={60} style={{ objectFit: 'cover' }} src={`http://localhost:3000/${i.image}`} /></td>
+                                    <td><img width={60} height={60} style={{ objectFit: 'cover' }} src={`https://morning-peak-77048.herokuapp.com/${i.image}`} /></td>
                                     <th scope="row">{i._id}</th>
                                     <td>{i.name}</td>
                                     <td>{i.price}</td>
@@ -41,7 +41,7 @@ export const AdminProducts: React.FC<IProducts> = ({ productsArray }: IProducts)
                                         onClick={(e)=>{
                                             e.preventDefault()
                                             console.log(i._id)
-                                            axios.delete(`http://localhost:3000/deleteproduct/${i._id}`)
+                                            axios.delete(`https://morning-peak-77048.herokuapp.com/deleteproduct/${i._id}`)
                                             .then((res)=>{
                                                 console.log(res.data)
                                                 productContext.setProducts(res.data)

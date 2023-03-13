@@ -27,7 +27,7 @@ export const Login: React.FC<IUser> = ({ orders }: IUser) => {
     const LoginData = {} as ILoginForm
     const logout = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault()
-        axios.get('http://localhost:3000/logout').then((res) => {
+        axios.get('https://morning-peak-77048.herokuapp.com/logout').then((res) => {
             console.log(res.status)
             localStorage.removeItem('userId')
             userContext.setUser({} as IUser)
@@ -62,11 +62,10 @@ export const Login: React.FC<IUser> = ({ orders }: IUser) => {
                                     <p className="orderPrice">
                                         {o.totalPrice}$
                                     </p>
-                                    <p  className={`orderStatus status${o.status}`}>
+                                    <p className={`orderStatus status${o.status}`}>
                                       {o.status == 3 ? 'DENIED' : ''}
                                       {o.status == 1 ? 'PENDING' : ''}
                                       {o.status == 2 ? 'ACCEPTED' : ''}
-
                                     </p>
                                 </div>
                                 <div className={`userOrderBottom ${active == index ? 'activeOrderAccordion' : ''}`}>
@@ -74,12 +73,10 @@ export const Login: React.FC<IUser> = ({ orders }: IUser) => {
                                         o.orderItems.map((oi) => {
                                             return (
                                                 <div className="orderItemInfo">
-                                                    <img src={`http://localhost:3000/${oi.image}`} />
+                                                    <img src={`https://morning-peak-77048.herokuapp.com/${oi.image}`} />
                                                     <p>COUNT : {oi.count}</p>
                                                     <p>PRICE : {oi.price}$</p>
                                                 </div>
-
-
                                             )
                                         })
                                     }
@@ -106,7 +103,7 @@ export const Login: React.FC<IUser> = ({ orders }: IUser) => {
                         onSubmit={values => {
                             LoginData.username = values.username;
                             LoginData.password = values.password
-                            axios.post('http://localhost:3000/login', LoginData)
+                            axios.post('https://morning-peak-77048.herokuapp.com/login', LoginData)
                                 .then((result) => {
                                     console.log(result)
                                     Swal.fire({
@@ -116,9 +113,9 @@ export const Login: React.FC<IUser> = ({ orders }: IUser) => {
                                         showConfirmButton: false,
                                         timer: 1500
                                     })
-
                                     const user = result.data as IUser
                                     userContext.setUser(user)
+                                    console.log(user)
                                     localStorage.setItem('userId', user.id)
                                     setTimeout(() => {
                                         window.location.href = `http://${window.location.host}/`
