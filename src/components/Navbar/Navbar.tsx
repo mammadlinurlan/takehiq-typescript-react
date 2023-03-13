@@ -2,18 +2,20 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import './Navbar.scss'
 import { faShoppingBag, faBars, faArrowCircleUp, faTrash, faArrowUp, faClosedCaptioning, faSearch, faWindowClose, faArrowDown, faUser, faShoppingCart, faUserAlt } from '@fortawesome/fontawesome-free-solid'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IoCloseOutline } from 'react-icons/io5'
+import { IoCloseOutline,IoBasket } from 'react-icons/io5'
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { Link, useLocation } from "react-router-dom";
 import { UserContext, BasketContext } from "../../hooks";
 import axios from "axios";
-import { IBasket, IBasketItem } from "../../interfaces";
+import { IBasket, IBasketItem, ProductIF } from "../../interfaces";
+import Swal from "sweetalert2";
 export const Navbar = () => {
     let { pathname } = useLocation()
     const [src, setSrc] = useState('/hiqLogo.webp')
     const [textColor, setTextColor] = useState('white')
     const [position, setPosition] = useState('absolute')
     const [total, setTotal] = useState(0)
+    const [searchProducts, setSearchProducts] = useState([] as ProductIF[])
     const userContext = useContext(UserContext)
     const basketContext = useContext(BasketContext)
     const Basket = basketContext.basket as IBasketItem[]
@@ -33,18 +35,16 @@ export const Navbar = () => {
         }
         document.querySelector('.basketarea')?.classList.remove('activeBasket')
     }, [pathname])
-
     useEffect(() => {
-
-      Basket ?  setTotal(
-             Basket.reduce((total, item) => {
+        Basket ? setTotal(
+            Basket.reduce((total, item) => {
                 return total += item.price * item.count
             }, 0)
-            
         )
-        :
-        console.log('log in')
+            :
+            console.log('log in')
     }, [Basket])
+
     return (
 
         <header style={{ position: position } as React.CSSProperties} id="header">
@@ -211,12 +211,80 @@ export const Navbar = () => {
                             <p>{total} $</p>
                         </div>
                         <div className={`goToCheckout ${Basket?.length > 0 ? '' : 'disabledButton'}`}>
-                            <Link to={`${Basket?.length > 0 ?  '/checkout' : '/'}`} >
+                            <Link to={`${Basket?.length > 0 ? '/checkout' : '/'}`} >
                                 PROCEED TO CHECKOUT
-                                </Link>
+                            </Link>
                         </div>
                     </div>
                 </div>
+            </div>
+            {/* <div className="searchZone">
+                <input
+                placeholder="Start typing"
+                    onKeyUp={(e) => {
+                        console.log(e.currentTarget.value)
+                        if (e.currentTarget.value.length > 2) {
+                            axios.get(`http://localhost:3000/searchproducts/${e.currentTarget.value}`).then(({ data }) => {
+                                console.log(data)
+                                setSearchProducts(data)
+                            }).catch((err) => {
+                                console.log(err)
+                            })
+                        } else {
+                            setSearchProducts([])
+                        }
+                    }}
+                />
+                <div className="searchItems">
+                    {searchProducts.map((p) => {
+                        return (
+                            <div key={p._id} className="searchItem">
+                                <div className="searchImage">
+                                    <img src={`http://localhost:3000/${p.image}`} />
+                                </div>
+                                <div className="searchItemInfo">
+                                    <p>
+                                        {p.name}
+                                    </p>
+                                    <p>
+                                        {p.price} $
+                                    </p>
+                                </div>
+                                <Link
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        console.log('salam')
+                                        const basketItem = {} as IBasketItem
+                                        basketItem._id = p._id
+                                        basketItem.count = 1
+                                        basketItem.image = p.image
+                                        basketItem.name = p.name
+                                        basketItem.price = p.price
+                                        basketItem.userId = localStorage.getItem('userId') || ''
+                                        axios.post('http://localhost:3000/addtobasket', basketItem)
+                                            .then((res) => {
+                                                console.log(res)
+                                                basketContext.setBasket(res.data as IBasketItem[])
+                                                Swal.fire({
+                                                    position: 'center',
+                                                    icon: 'success',
+                                                    showConfirmButton: false,
+                                                    timer: 1500
+                                                  })
+                                            })
+                                            .catch((err) => {
+                                                window.location.href = `http://${window.location.host}/login`
+                                            })
+                                    }}
+                                    to='/'><IoBasket/></Link>
+                            </div>
+                        )
+                    })}
+                </div>
+
+            </div> */}
+            <div>
+
             </div>
         </header>
     )

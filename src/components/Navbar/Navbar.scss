@@ -4,6 +4,55 @@ header {
     width: 100%;
     z-index: 999;
 }
+.searchZone{
+    padding: 0px 10px;
+
+    input{
+        width: 100%;
+        padding: 10px 0px;
+        border:1px solid #dadada;
+    }
+    height: 100vh;
+    width: 30%;
+    background-color: yellow;
+    position: fixed;
+    top: 0;
+    right: 0;
+    .searchItems{
+        .searchItem{
+            margin: 10px 0px;
+            a{
+              
+                text-decoration: none;
+                color: black;
+                font-size: 30px;
+
+            }
+            display: flex;
+            justify-content: space-between;
+            .searchItemInfo {
+                width: 230px;
+            }
+            p {
+                font-weight: 700;
+                font-size: 18px;
+                margin: 0;
+            }
+            .searchImage {
+                width: 90px;
+                height: 90px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+        }
+    }
+
+ 
+   
+}
 
 .disabledButton{
     a{
@@ -161,7 +210,6 @@ header .customerServices {
     }
     .basketItem {
         padding: 25px 15px;
-        // margin: 10px 0px;
         border-top: 2px solid #e8e8e1;
         border-bottom: 2px solid #e8e8e1;
         display: flex;
