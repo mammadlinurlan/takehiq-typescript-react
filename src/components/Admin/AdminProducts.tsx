@@ -44,7 +44,7 @@ export const AdminProducts: React.FC<IProducts> = ({ productsArray }: IProducts)
                                             axios.delete(`https://morning-peak-77048.herokuapp.com/deleteproduct/${i._id}`)
                                             .then((res)=>{
                                                 console.log(res.data)
-                                                productContext.setProducts(res.data)
+                                                productContext.setProducts(res.data.reverse())
                                                 Swal.fire({
                                                     icon: 'success',
                                                     title: 'Done...',
