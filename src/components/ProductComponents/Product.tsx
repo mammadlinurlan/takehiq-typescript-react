@@ -4,6 +4,7 @@ import './product.css'
 import { BasketContext } from "../../hooks";
 import axios from "axios";
 import { Link, Navigate ,redirect} from "react-router-dom";
+import Swal from "sweetalert2";
 export const Product: React.FC<ProductIF> = (props: ProductIF) => {
     const p = {} as ProductIF
     const basketContext = useContext(BasketContext)
@@ -33,9 +34,17 @@ export const Product: React.FC<ProductIF> = (props: ProductIF) => {
                                 .then((res) => {
                                     console.log(res)
                                     basketContext.setBasket(res.data as IBasketItem[])
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Successfully added!',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
                                 })
                                 .catch((err) => {
                                     window.location.href = `http://${window.location.host}/login`
+                                   
                                 })
                     }}
                     to='/'>ADD TO CART</Link>

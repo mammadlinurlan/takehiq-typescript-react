@@ -4,59 +4,85 @@ header {
     width: 100%;
     z-index: 999;
 }
-.searchZone{
-    padding: 0px 10px;
-
-    input{
-        width: 100%;
-        padding: 10px 0px;
-        border:1px solid #dadada;
+.activeSearch {
+    width: 30% !important;
+}
+.searchWrapper {
+    .searchTitleWrapper{
+        display: flex;
     }
     height: 100vh;
-    width: 30%;
-    background-color: yellow;
+    background-color: white;
     position: fixed;
     top: 0;
     right: 0;
-    .searchItems{
-        .searchItem{
-            margin: 10px 0px;
-            a{
-              
-                text-decoration: none;
-                color: black;
-                font-size: 30px;
+    width: 0;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition-timing-function: ease-in-out;
+    transition: 0.23s;
 
+    .searchZone {
+        padding: 10px 10px;
+        .searchHead {
+            .searchTitleWrapper{
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                h4{
+                    font-weight: 700;
+                }
             }
             display: flex;
+            align-items: center;
+            flex-direction: column;
             justify-content: space-between;
-            .searchItemInfo {
-                width: 230px;
+            input {
+               width: 100%;
+                padding: 10px 0px;
+                border: 1px solid #dadada;
             }
-            p {
-                font-weight: 700;
-                font-size: 18px;
-                margin: 0;
+            svg {
+                display: inline-block;
+                font-size: 35px;
             }
-            .searchImage {
-                width: 90px;
-                height: 90px;
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: contain;
+        }
+
+        .searchItems {
+            height: 90vh;
+            overflow: scroll;
+            .searchItem {
+                margin: 10px 0px;
+                a {
+                    text-decoration: none;
+                    color: black;
+                    font-size: 30px;
+                }
+                display: flex;
+                justify-content: space-between;
+                .searchItemInfo {
+                    width: 230px;
+                }
+                p {
+                    font-weight: 700;
+                    font-size: 18px;
+                    margin: 0;
+                }
+                .searchImage {
+                    width: 90px;
+                    height: 90px;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                    }
                 }
             }
         }
     }
-
- 
-   
 }
 
-.disabledButton{
-    a{
-
+.disabledButton {
+    a {
         background-color: grey !important;
         cursor: not-allowed;
     }
@@ -181,8 +207,6 @@ header .customerServices {
     padding-top: 10px;
 }
 
-
-
 .basketarea {
     padding: 0px 35px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -198,13 +222,13 @@ header .customerServices {
     opacity: 0%;
     overflow: hidden;
     visibility: hidden;
-    .basketWrapper{
+    .basketWrapper {
         flex-direction: column;
         justify-content: space-between;
         // height: 100vh;
         // padding: 5px 0px;
     }
-    .basketItems{
+    .basketItems {
         height: 75vh;
         overflow: scroll;
     }
@@ -232,45 +256,47 @@ header .customerServices {
             }
         }
     }
-    .basketBottom{
+    .basketBottom {
         // height: 15vh;
         // display: flex;
         // flex-direction: column;
         // justify-content: flex-start;
         // padding-bottom: 30px;
-        .basketTotalPrice{
+        .basketTotalPrice {
             display: flex;
             justify-content: space-between;
         }
-        p{
+        p {
             font-weight: 600;
             font-size: 16px;
             // margin: 0;
         }
-        a{
+        a {
             display: inline-block;
             width: 100%;
             padding: 16px 0px;
-            background-color: #01bb17 ;
+            background-color: #01bb17;
             color: white;
             text-decoration: none;
-            font-size:18px;
+            font-size: 18px;
             font-weight: 700;
             text-align: center;
         }
     }
 }
-.activeBasket{
+.activeBasket {
     visibility: visible;
     width: 33%;
     opacity: 100%;
 }
 
 @media screen and (max-width: 767px) {
-   
-    .activeBasket{
+    .activeBasket {
         visibility: visible;
         width: 90%;
+    }
+    .activeSearch {
+        width: 70% !important;
     }
     .services {
         display: none !important;
@@ -294,7 +320,7 @@ header .customerServices {
     header .customerServices svg:nth-child(2) {
         display: block !important;
     }
-    .basketItems{
+    .basketItems {
         height: 80vh !important;
     }
 }
@@ -303,16 +329,17 @@ header .customerServices {
     .mobileNav {
         display: none;
     }
-  
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
     .mobileNav {
         display: none;
     }
-    .activeBasket{
+    .activeBasket {
         visibility: visible;
         width: 55%;
-
+    }
+    .activeSearch {
+        width: 50% !important;
     }
 }
