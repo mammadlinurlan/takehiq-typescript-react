@@ -263,6 +263,8 @@ export const Navbar = () => {
                                     console.log(err)
                                 })
                             } else {
+                                setNoResult(false)
+
                                 setSearchProducts([])
                             }
                         }}
