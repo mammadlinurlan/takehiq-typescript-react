@@ -242,7 +242,8 @@ export const Navbar = () => {
 
                                
                             }} />
-                    </div>
+                    </div> 
+                    
                     <input
                         placeholder="Start typing"
                         id="searchInput"
