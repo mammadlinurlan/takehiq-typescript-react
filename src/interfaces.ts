@@ -31,7 +31,7 @@ export interface ILoginForm{
 }
 
 export interface IUser{
-    id : string,
+    _id : string,
     username : string,
     email : string,
     isadmin : boolean,

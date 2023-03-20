@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { Link,Navigate,redirect } from "react-router-dom";
+import { Link,Navigate,redirect,useNavigate } from "react-router-dom";
 import { IRegister } from "../../interfaces";
 import { data } from "jquery";
 import Swal from 'sweetalert2'
@@ -30,7 +30,7 @@ const SignupSchema = Yup.object().shape({
 
 export const Register = () => {
     const RegisterForm = {} as IRegister
-
+    const navigate = useNavigate()
     return !localStorage.getItem('userId') ? (
         <div style={{ height: '100vh' }} className="login">
             <div className="loginWrapper col-lg-4 col-md-6 col-10">
@@ -59,10 +59,9 @@ export const Register = () => {
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            setTimeout(() => {
-                                window.location.href = `http://${window.location.host}/`
-            
-                            }, 1500);
+                        })
+                        .then(()=>{
+                            navigate('/login')
                         })
                         .catch((err)=>{
                             console.log(err)

@@ -6,11 +6,12 @@ import { Formik, Form, Field } from 'formik';
 import './AdminUpdateProduct.scss'
 import { useState, useContext } from "react";
 import { ProductContext } from "../../hooks";
-import { useParams } from "react-router-dom";
+import { useParams ,useNavigate} from "react-router-dom";
 import { ProductIF } from "../../interfaces";
 
 export const AdminUpdateProduct = () => {
     const { productId } = useParams()
+    const navigate = useNavigate()
     const [product, setProduct] = useState({} as ProductIF)
     const [file, setFile] = useState('')
     const changeHandler = (e) => {
@@ -71,10 +72,11 @@ export const AdminUpdateProduct = () => {
                                     showConfirmButton: false,
                                     timer: 1500
                                 })
-                                setTimeout(() => {
-                                    window.location.href = `http://${window.location.host}/admin/products`
-                                }, 1500);
                             })
+
+                        .then(()=>{
+                            navigate('/admin/products')
+                        })
                             .catch((err) => {
                                 console.log(err)
                                 Swal.fire({

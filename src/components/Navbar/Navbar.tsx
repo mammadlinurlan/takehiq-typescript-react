@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 export const Navbar = () => {
     let { pathname } = useLocation()
     const [src, setSrc] = useState('/hiqLogo.webp')
-    const [inputVal,setInputVal] = useState('')
+    const [inputVal, setInputVal] = useState('')
     const [textColor, setTextColor] = useState('white')
     const [position, setPosition] = useState('absolute')
     const [total, setTotal] = useState(0)
@@ -108,10 +108,10 @@ export const Navbar = () => {
                             }} style={{ color: "black", display: "none" }} icon={faBars as IconProp} />
 
                             <FontAwesomeIcon
-                              onClick={() => {
-                                document.querySelector('.searchWrapper')?.classList.add('activeSearch')
-                            }}
-                            style={{ color: "black" }} icon={faSearch as IconProp} />
+                                onClick={() => {
+                                    document.querySelector('.searchWrapper')?.classList.add('activeSearch')
+                                }}
+                                style={{ color: "black" }} icon={faSearch as IconProp} />
                             <FontAwesomeIcon
                                 onClick={() => {
                                     document.querySelector('.basketarea')?.classList.add('activeBasket')
@@ -231,100 +231,100 @@ export const Navbar = () => {
                 </div>
             </div>
             <div className="searchWrapper">
-            <div className="searchZone">
-                
-                <div className="searchHead">
-                    <div className="searchTitleWrapper">
-                        <h4>SEARCH</h4>
-                        <IoCloseOutline   onClick={() => {
+                <div className="searchZone">
+
+                    <div className="searchHead">
+                        <div className="searchTitleWrapper">
+                            <h4>SEARCH</h4>
+                            <IoCloseOutline onClick={() => {
                                 document.querySelector('.searchWrapper')?.classList.remove('activeSearch')
                                 setSearchProducts([])
 
-                               
+
                             }} />
-                    </div> 
-                    
-                    <input
-                        placeholder="Start typing"
-                        id="searchInput"
-                        onKeyUp={(e) => {
-                            console.log(e.currentTarget.value)
-                            if (e.currentTarget.value.length > 2) {
-                                axios.get(`https://morning-peak-77048.herokuapp.com/searchproducts/${e.currentTarget.value}`).then(({ data }) => {
-                                    console.log(data)
-                                    setSearchProducts(data)
-                                    data.length == 0 ?
-                                        setNoResult(true)
-                                        :
-                                        setNoResult(false)
+                        </div>
+
+                        <input
+                            placeholder="Start typing"
+                            id="searchInput"
+                            onKeyUp={(e) => {
+                                console.log(e.currentTarget.value)
+                                if (e.currentTarget.value.length > 2) {
+                                    axios.get(`https://morning-peak-77048.herokuapp.com/searchproducts/${e.currentTarget.value}`).then(({ data }) => {
+                                        console.log(data)
+                                        setSearchProducts(data)
+                                        data.length == 0 ?
+                                            setNoResult(true)
+                                            :
+                                            setNoResult(false)
 
 
-                                    console.log(noResult)
-                                }).catch((err) => {
-                                    console.log(err)
-                                })
-                            } else {
-                                setNoResult(false)
+                                        console.log(noResult)
+                                    }).catch((err) => {
+                                        console.log(err)
+                                    })
+                                } else {
+                                    setNoResult(false)
 
-                                setSearchProducts([])
-                            }
-                        }}
-                    />
-                   
-                </div>
-                {
-                    noResult ? <h3>No such products!</h3> : <div></div>
+                                    setSearchProducts([])
+                                }
+                            }}
+                        />
 
-                }
-                <div className="searchItems">
-                    {searchProducts.map((p) => {
-                        return (
-                            <div key={p._id} className="searchItem">
-                                <div className="searchImage">
-                                    <img src={`https://morning-peak-77048.herokuapp.com/${p.image}`} />
-                                </div>
-                                <div className="searchItemInfo">
-                                    <p>
-                                        {p.name}
-                                    </p>
-                                    <p>
-                                        {p.price} $
-                                    </p>
-                                </div>
-                                <Link
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        console.log('salam')
-                                        const basketItem = {} as IBasketItem
-                                        basketItem._id = p._id
-                                        basketItem.count = 1
-                                        basketItem.image = p.image
-                                        basketItem.name = p.name
-                                        basketItem.price = p.price
-                                        basketItem.userId = localStorage.getItem('userId') || ''
-                                        axios.post('https://morning-peak-77048.herokuapp.com/addtobasket', basketItem)
-                                            .then((res) => {
-                                                console.log(res)
-                                                basketContext.setBasket(res.data as IBasketItem[])
-                                                Swal.fire({
-                                                    position: 'center',
-                                                    icon: 'success',
-                                                    showConfirmButton: false,
-                                                    timer: 1500
+                    </div>
+                    {
+                        noResult ? <h3>No such products!</h3> : <div></div>
+
+                    }
+                    <div className="searchItems">
+                        {searchProducts.map((p) => {
+                            return (
+                                <div key={p._id} className="searchItem">
+                                    <div className="searchImage">
+                                        <img src={`https://morning-peak-77048.herokuapp.com/${p.image}`} />
+                                    </div>
+                                    <div className="searchItemInfo">
+                                        <p>
+                                            {p.name}
+                                        </p>
+                                        <p>
+                                            {p.price} $
+                                        </p>
+                                    </div>
+                                    <Link
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            console.log('salam')
+                                            const basketItem = {} as IBasketItem
+                                            basketItem._id = p._id
+                                            basketItem.count = 1
+                                            basketItem.image = p.image
+                                            basketItem.name = p.name
+                                            basketItem.price = p.price
+                                            basketItem.userId = localStorage.getItem('userId') || ''
+                                            axios.post('https://morning-peak-77048.herokuapp.com/addtobasket', basketItem)
+                                                .then((res) => {
+                                                    console.log(res)
+                                                    basketContext.setBasket(res.data as IBasketItem[])
+                                                    Swal.fire({
+                                                        position: 'center',
+                                                        icon: 'success',
+                                                        showConfirmButton: false,
+                                                        timer: 1500
+                                                    })
                                                 })
-                                            })
-                                            .catch((err) => {
-                                                window.location.href = `http://${window.location.host}/login`
-                                            })
-                                    }}
-                                    to='/'><IoBasket /></Link>
-                            </div>
-                        )
-                    })}
+                                                .catch((err) => {
+                                                    window.location.href = `http://${window.location.host}/login`
+                                                })
+                                        }}
+                                        to='/'><IoBasket /></Link>
+                                </div>
+                            )
+                        })}
 
+                    </div>
                 </div>
-                </div>
-               
+
 
             </div>
             <div>

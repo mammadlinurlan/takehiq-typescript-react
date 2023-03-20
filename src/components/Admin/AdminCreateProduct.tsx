@@ -4,12 +4,15 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Formik, Form, Field } from 'formik';
 import './AdminCreateProduct.scss'
+import { useNavigate } from "react-router-dom";
 
 export const AdminCreateProducts = () => {
     const [file, setFile] = useState('')
     const changeHandler = (e) => {
         setFile(e.target.files[0])
     }
+    const navigate = useNavigate()
+
     const ProductSchema = Yup.object().shape({
         name: Yup.string()
             .min(2, 'Too Short!')
@@ -53,10 +56,9 @@ export const AdminCreateProducts = () => {
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            setTimeout(() => {
-                                window.location.href = `http://${window.location.host}/admin/products`
-
-                            }, 1500);
+                        })
+                        .then(()=>{
+                            navigate('/admin/products')
                         })
                         .catch((err) => {
                             console.log(err)

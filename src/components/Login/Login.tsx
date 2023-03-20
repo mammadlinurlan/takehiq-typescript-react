@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import './Login.scss'
-import { Link } from "react-router-dom";
+import { Link, Navigate,useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from 'formik';
 import { ILoginForm, IUser } from "../../interfaces";
 import * as Yup from 'yup';
@@ -12,6 +12,7 @@ axios.defaults.withCredentials = true
 
 export const Login: React.FC<IUser> = ({ orders }: IUser) => {
     const [active,setActive] = React.useState(null)
+    const navigate = useNavigate()
     const userContext = useContext(UserContext)
     const basketContext = useContext(BasketContext)
     const SignupSchema = Yup.object().shape({
@@ -113,13 +114,15 @@ export const Login: React.FC<IUser> = ({ orders }: IUser) => {
                                         showConfirmButton: false,
                                         timer: 1500
                                     })
+                                    console.log('user budu' ,result.data)
                                     const user = result.data as IUser
                                     userContext.setUser(user)
                                     console.log(user)
-                                    localStorage.setItem('userId', user.id)
-                                    setTimeout(() => {
-                                        window.location.href = `http://${window.location.host}/`
-                                    }, 1500);
+                                    localStorage.setItem('userId', user._id)
+                                    
+                                })
+                                .then(()=>{
+                                    navigate('/')
                                 })
                                 .catch((err) => {
                                     console.log(err)

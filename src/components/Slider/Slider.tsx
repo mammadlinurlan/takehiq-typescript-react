@@ -43,9 +43,22 @@ export const Slider = () => {
 
 
                 </Carousel.Item>
+
+                <Carousel.Item style={{ height: '95vh' }}>
+                    <img
+                        style={{ objectFit: 'cover', height: '95vh' }}
+                        className="d-block w-100"
+                        src='
+https://cdn.shopify.com/s/files/1/0579/3795/2829/files/SLIDER-BANNER-ISOLATE-2_601a98e3-0156-41eb-a86a-0715fce4ffc6.jpg?v=1678914214&width=1920
+'
+                        alt="Third slide"
+                    />
+
+
+                </Carousel.Item>
+            
             </Carousel>
         </section>
-
 
     )
 }

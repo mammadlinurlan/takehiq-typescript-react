@@ -72,6 +72,7 @@
         height: 45vh !important;
         animation-name: mobileBannerAnimation !important; 
         background-repeat: no-repeat !important;
+        background-attachment: unset !important;
         /* background-size: cover; */
     }
 }

@@ -4,12 +4,13 @@ import './Checkout.scss'
 import { IBasket,IBasketItem,IMakeOrder } from "../../interfaces";
 import { Formik, Form, Field } from 'formik';
 import { BasketContext ,UserContext} from "../../hooks";
-import { Navigate,redirect } from "react-router-dom";
+import { Navigate,redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Nav } from "react-bootstrap";
 import Swal from "sweetalert2";
 
 export const Checkout: React.FC<IBasket> = ({ basketArray }: IBasket) => {
+    const navigate = useNavigate()
     const basketContext = useContext(BasketContext)
     const user = useContext(UserContext)
     const Basket = basketContext.basket as IBasketItem[]
@@ -77,7 +78,7 @@ export const Checkout: React.FC<IBasket> = ({ basketArray }: IBasket) => {
                             validationSchema={orderSchema}
                             onSubmit={values => {
                                 const order : IMakeOrder = {
-                                    userId : user.user.id,
+                                    userId : user.user._id,
                                     name : values.name,
                                     surname : values.surname,
                                     address : values.address,
@@ -91,7 +92,7 @@ export const Checkout: React.FC<IBasket> = ({ basketArray }: IBasket) => {
                                     orderItems : basketArray,
                                     date : new Date()
                                 }
-                                
+                                console.log(order)
                                 axios.post(`https://morning-peak-77048.herokuapp.com/makeorder/${localStorage.getItem('userId')}`,order)
                                 .then((res)=>{
                                     console.log(res)
@@ -102,10 +103,11 @@ export const Checkout: React.FC<IBasket> = ({ basketArray }: IBasket) => {
                                         showConfirmButton: false,
                                         timer: 1500
                                       })
-                                      setTimeout(() => {
-                                        window.location.href = `http://${window.location.host}`
-                    
-                                    }, 1500);
+                                    basketContext.setBasket([])
+
+                                    })
+                                    .then(()=>{
+                                        navigate('/')
                                     })
                                 .catch((err)=>{
                                     <Navigate to='/login'/>
