@@ -40,6 +40,12 @@ export interface IUser{
 
 }
 
+export interface ISlider{
+    _id : string,
+    name : string,
+    image : string
+}
+
 export interface IBasketItem{
     _id : string,
     count : number,

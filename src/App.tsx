@@ -11,7 +11,7 @@ import { Login } from './components/Login/Login';
 import { Products } from './components/ProductComponents/Products';
 import { Footer } from './components/Footer/Footer';
 import { Register } from './components/Register/Register';
-import { IUser, IBasket, IOrders, IOrder, ProductIF } from './interfaces';
+import { IUser, IBasket, IOrders, IOrder, ProductIF, ISlider } from './interfaces';
 import { log } from 'console';
 import { Checkout } from './components/Checkout/Checkout';
 import { AdminIndex } from './components/Admin/AdminIndex';
@@ -20,6 +20,9 @@ import { AdminProducts } from './components/Admin/AdminProducts';
 import { AdminCreateProducts } from './components/Admin/AdminCreateProduct';
 import { AdminUpdateProduct } from './components/Admin/AdminUpdateProduct';
 import { AdminUsers } from './components/Admin/AdminUsers';
+import { AdminSliders } from './components/Admin/AdminSliders';
+import { AdminAddSlider } from './components/Admin/AdminAddSlider';
+
 
 axios.defaults.withCredentials = true;
 
@@ -30,9 +33,20 @@ function App() {
   const [isUserLoaded, setIsUserLoaded] = React.useState(false);
   const [orders, setOrders] = React.useState([] as IOrder[])
   const [users,setUsers] = React.useState([] as IUser[])
+  const [sliders,setSliders] = React.useState([] as ISlider[])
   const value = { user, setUser }
   
   useEffect(() => {
+    // axios.get(`http://localhost:3000/querytest?name=${"nurlan"}&age=${20}`)
+    // .then((res)=>{
+    //   console.log(res)
+    // })
+
+    axios.get(`https://morning-peak-77048.herokuapp.com/sliders`)
+    .then((res)=>{
+        setSliders(res.data)
+    })
+
     axios.get('https://morning-peak-77048.herokuapp.com/fortype').then(({ data }) => {
       setProducts(data.reverse())
     })
@@ -47,7 +61,6 @@ function App() {
       .then((result) => {
         console.log(result)
         if (localStorage.getItem('userId')) {
-
           let id = localStorage.getItem('userId')
           axios.get(`https://morning-peak-77048.herokuapp.com/getuser/${id}`)
             .then(({ data }) => {
@@ -56,7 +69,6 @@ function App() {
               console.log("res", data as IUser)
               setIsUserLoaded(true);
             })
-
         }
       })
       .catch((err) => {
@@ -106,6 +118,9 @@ function App() {
                   {isUserLoaded && user.isadmin && <Route path='/admin/createproduct' element={<AdminCreateProducts />} />}
                   {isUserLoaded && user.isadmin && <Route path='/admin/updateproduct/:productId' element={<AdminUpdateProduct />} />}
                   {isUserLoaded && user.isadmin && <Route path='/admin/users/' element={<AdminUsers users={users} />} />}
+                  {isUserLoaded && user.isadmin && <Route path='/admin/sliders/' element={<AdminSliders sliders={sliders}  />} />}
+                  {isUserLoaded && user.isadmin && <Route path='/admin/addslider/' element={<AdminAddSlider  />} />}
+
                   <Route path='*' element={<NotFound />} />
                 </Routes>
                 <Footer />
